@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,8 +29,9 @@ public class EchoServer {
 //              Der Outputstream soll den gerade empfangenen Input vom Client gleich wieder schreiben (als Bytes)
                 OutputStream os = zumClient.getOutputStream();
 //                Abbruch bei -1, weil Bytestreams mit -1 enden
-                while (zumClient.getInputStream().read() != -1) {
-                    os.write(zumClient.getInputStream().read());
+                int zeile = 0;
+                while ((zeile = zumClient.getInputStream().read()) != -1) {
+                    os.write(zeile);
 //                    Jedes Byte wird geloggt und der Counter hochgezählt
                     LOG.info("1 Byte übertragen");
                     counter++;
